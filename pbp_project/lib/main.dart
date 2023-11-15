@@ -1,38 +1,57 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pbp_project/menu.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:pbp_project/providers/auth_provider.dart';
+import 'package:pbp_project/providers/shop_provider.dart';
+import 'package:pbp_project/screens/lihat_item_page.dart';
+import 'package:pbp_project/screens/login_page.dart';
+import 'package:pbp_project/screens/logout_page.dart';
+import 'package:pbp_project/screens/menu.dart';
+import 'package:pbp_project/screens/shoplist_form.dart';
+import 'package:provider/provider.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+    if (kDebugMode) {
+      print("Firebase initialized successfully");
+    }
+  } catch (error) {
+    if (kDebugMode) {
+      print("Error initializing Firebase: $error");
+    }
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => ShopProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
+        primarySwatch: Colors.indigo,
       ),
       home: MyHomePage(),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/logout': (context) => const LogoutPage(),
+        '/addItem': (context) => const ShopFormPage(),
+        '/lihatItem': (context) => const LihatItemPage(),
+      },
     );
   }
 }
