@@ -33,7 +33,7 @@ Langkah-langkah membuat sebuah program Flutter baru dengan tema inventory, membu
 
 3. import 'package:flutter/material.dart'; pada menu.dart
 4. Memindahkan kode baris ke-39 hingga akhir yang sudah ada dari default-nya pada file main.dart ke menu.dart
-5. import 'package:shopping_list/menu.dart'; pada main.dart
+5. import 'package:pbp_project/menu.dart'; pada main.dart
 
 6. Mengubah kode pada main.dart dibagian tema aplikasi
 7. Pada file main.dart, menghapus MyHomePage(title: 'Flutter Demo Home Page') sehingga menjadi MyHomePage(). Ini mengubah sifat widget halaman menu menjadi stateless.
@@ -108,3 +108,176 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
 11. Lakukan hal penyesuaian lain untuk login dan daftar item. Update juga drawer.
 12. Pindahkan halaman-halaman yang sudah dibuat sebelumnya ke dalam satu folder screens untuk mempermudah kita ke depannya. Refactoring
 13. Untuk memudahkan juga, buat semua route di MyApp pada main.dart agar untuk memanggil nantinya praktis di kelas-kelas lain.
+
+Penjelasan Tugas 9
+1
+Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+Bisa saja melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Ini biasanya dilakukan dengan menggunakan library atau fungsi di suatu bahasa pemrograman untuk melakukan parsing langsung dari JSON ke struktur data yang dapat digunakan. Namun, membuat model seringkali disarankan karena dapat memberikan struktur dan tipe data yang jelas, memudahkan dalam pengembangan, dan memberikan keamanan terhadap data yang diambil.
+
+2
+Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+CookieRequest adalah sebuah class atau objek yang digunakan untuk melakukan manajemen cookies dalam aplikasi Flutter. CookieRequest merupakan bagian dari paket pbp_django_auth, yang digunakan untuk berinteraksi dengan server Django, terutama untuk tujuan otentikasi pengguna.
+CookieRequest digunakan untuk menyimpan, mengambil, dan mengelola cookies yang diterima dari server Django. Cookies ini biasanya digunakan untuk menjaga status otentikasi pengguna di seluruh sesi. CookieRequest memiliki metode atau fungsi untuk membuat permintaan HTTP ke server Django. Ini dapat mencakup permintaan untuk login, logout, dan operasi otentikasi lainnya.
+Dengan berbagi instance CookieRequest ke seluruh komponen, kita memastikan bahwa status otentikasi dan informasi cookies dapat diakses secara konsisten di seluruh aplikasi. Ini dapat membantu dalam manajemen state global. Dengan menggunakan satu instance yang sama di seluruh aplikasi, kita menghindari duplikasi kode dan membuat logika otentikasi menjadi lebih terpusat. Ini dapat membuat pengelolaan otentikasi menjadi lebih mudah.
+Jika setiap komponen memiliki instance CookieRequest yang terpisah, mungkin sulit untuk memastikan konsistensi antara status otentikasi di berbagai bagian aplikasi. Dengan berbagi instance, kita dapat memastikan bahwa informasi otentikasi adalah yang sama di seluruh aplikasi. Memiliki satu instance CookieRequest yang dibagikan dapat membantu menghindari pembuatan banyak koneksi atau permintaan otentikasi yang berlebihan ke server. Ini dapat meningkatkan efisiensi aplikasi.
+Dengan instance CookieRequest yang dibagikan, kita memiliki fleksibilitas untuk memodifikasi atau memperluas fungsionalitas otentikasi tanpa perlu mengubah banyak bagian kode.
+
+3
+Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+Pengambilan Data JSON:
+-Menggunakan paket HTTP (seperti http) untuk membuat permintaan HTTP ke server.-Mendapatkan respons yang berisi data dalam format JSON.
+
+Penguraian JSON:
+Menggunakan fungsi jsonDecode untuk menguraikan data JSON ke dalam struktur data Dart (dalam hal ini, objek List<Item>).
+
+Konversi ke Model:
+Jika model telah dibuat, mengonversi data Dart ke objek model menggunakan konstruktor model.
+
+Menampilkan Data pada Flutter:
+Menggunakan widget seperti FutureBuilder untuk menangani asinkronitas dan menampilkan data ke antarmuka pengguna.
+
+4
+Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+Input Data Akun pada Flutter:
+Pengguna memasukkan data akun, seperti username dan password, melalui antarmuka Flutter.
+
+Pengiriman Data ke Server Django:
+Menggunakan objek CookieRequest atau paket HTTP, data akun dikirim ke endpoint autentikasi Django.
+
+Proses Autentikasi oleh Django:
+- Django memeriksa kecocokan data akun dengan data yang tersimpan di database.
+- Jika akun valid, server Django mengembalikan token otentikasi atau status berhasil.
+
+Penanganan Respons di Flutter:
+- Flutter menerima respons dari server Django.
+- Jika otentikasi berhasil, pengguna diarahkan ke halaman beranda atau menu utama menggunakan Navigator.
+
+Tampilnya Menu pada Flutter:
+- Setelah otentikasi berhasil, menu atau layar beranda ditampilkan.
+- Menggunakan widget seperti Drawer atau navigasi antar halaman untuk memberikan akses ke berbagai fitur aplikasi.
+
+5
+Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+
+1. MaterialApp:
+- Representasi root dari aplikasi Flutter.
+- Mengonfigurasi tema umum dan judul aplikasi.
+- Mengelilingi seluruh aplikasi.
+2. Scaffold:
+- Menyediakan struktur dasar untuk antarmuka visual aplikasi.
+- Berisi app bar, drawer, dan body.
+3. AppBar:
+- Representasi bar atas aplikasi.
+- Menampilkan judul layar saat ini.
+4. Drawer:
+- Representasi drawer navigasi samping.
+- Berisi tautan atau aksi untuk navigasi.
+5. LeftDrawer (Widget Kustom):
+- Representasi widget drawer kustom.
+- Menyediakan tautan atau aksi untuk navigasi dalam aplikasi.
+6. Text:
+- Menampilkan teks di layar.
+- Digunakan untuk berbagai judul, label, dan pesan.
+7. TextField:
+- Menyediakan bidang input teks.
+- Digunakan untuk memasukkan username dan password pada halaman login dan detail item pada halaman formulir.
+8. ElevatedButton:
+- Representasi tombol terangkat.
+- Memicu aksi ketika ditekan, seperti mengirimkan formulir atau berpindah ke layar lain.
+- Digunakan untuk tombol login.
+9. FutureBuilder:
+- Widget yang membantu dalam mengelola status dari suatu Future.
+- Menampilkan komponen UI yang berbeda berdasarkan status operasi asinkron.
+- Digunakan untuk mengambil dan menampilkan data dari server secara asinkron.
+10. ListView.builder:
+- Membangun daftar yang dapat discroll berdasarkan permintaan.
+- Efisien membuat dan menghapus widget saat discroll masuk dan keluar dari tampilan.
+- Digunakan untuk menampilkan daftar item yang diambil dari server.
+11. Column:
+- Menyusun widget anak secara vertikal.
+- Digunakan untuk mengorganisir widget secara vertikal dalam body dari Scaffold.
+12. GridView.count:
+- Membuat grid yang dapat discroll dengan jumlah tile yang tetap di sumbu silang.
+- Digunakan untuk menampilkan grid dari item pada halaman utama.
+13. SnackBar:
+- Menampilkan pesan singkat di bagian bawah layar.
+- Digunakan untuk menampilkan pesan umpan balik, seperti login berhasil atau pengiriman formulir.
+14. SingleChildScrollView:
+- Memungkinkan widget anaknya discroll jika melebihi tinggi viewport.
+- Digunakan untuk membungkus konten dalam formulir atau layout lainnya untuk mencegah masalah overflow.
+15. Form:
+- Kontainer untuk mengelompokkan dan memvalidasi beberapa form field.
+- Digunakan untuk membungkus input field dalam halaman formulir.
+16. GlobalKey<FormState> (_formKey):
+- Kunci untuk mengidentifikasi secara unik suatu widget Form.
+- Digunakan untuk validasi dan mengakses state form pada halaman formulir.
+17. InkWell:
+- Memberikan efek visual ketika pengguna menyentuh widget.
+- Digunakan untuk interaksi sentuhan pada widget ShopCard.
+18. Container:
+- Model kotak yang dapat berisi widget lainnya.
+- Digunakan untuk styling dan padding pada berbagai bagian UI.
+19. DrawerHeader:
+- ListTile khusus yang dimaksudkan untuk digunakan dalam Drawer.
+- Berisi header dari drawer, termasuk nama aplikasi dan deskripsi singkat.
+20. ListTile:
+- Mewakili baris dengan tinggi tetap yang berisi teks dan ikon opsional di bagian depan atau belakang.
+- Digunakan untuk setiap item navigasi di drawer.
+21. Icon:
+- Mewakili ikon grafis.
+- Digunakan sebagai ikon di bagian depan setiap ListTile untuk item navigasi di drawer.
+22. Padding:
+- Menambahkan padding di sekitar widget anak.
+- Digunakan untuk menambahkan spasi antara elemen-elemen di header drawer.
+23. MyHomePage:
+- Representasi layar utama dari aplikasi.
+- Menampilkan grid item dengan ikon dan label untuk berbagai tindakan.
+24. ShopFormPage:
+- Representasi halaman formulir untuk menambahkan item baru.
+- Menggunakan validasi formulir dan membuat permintaan POST untuk menambahkan item ke server.
+25. ItemPage:
+- Representasi halaman untuk melihat daftar item yang diambil dari server.
+- Menggunakan FutureBuilder untuk pengambilan data asinkron.
+26. ShopItem (Kelas Kustom):
+- Representasi model untuk item di toko, termasuk nama dan ikon.
+- Digunakan untuk membuat daftar objek ShopItem untuk grid pada layar utama.
+27. Provider:
+- Widget dari paket provider untuk manajemen state.
+- Membungkus seluruh MaterialApp untuk menyediakan objek CookieRequest ke aplikasi.
+28. MyApp:
+- Titik masuk utama untuk aplikasi Flutter.
+- Mengonfigurasi MaterialApp, mengatur tema, dan mendefinisikan halaman beranda serta pemetaan rute.
+
+6
+
+1. Membuat django-app bernama authentication pada project Django yang telah dibuat
+2. Tambahkan authentication ke INSTALLED_APPS pada main project settings.py aplikasi Django
+3. Jalankan perintah pip install django-cors-headers untuk menginstal library yang dibutuhkan.
+4. Tambahkan corsheaders ke INSTALLED_APPS pada main project settings.py aplikasi Django 
+5. Tambahkan corsheaders.middleware.CorsMiddleware pada main project settings.py aplikasi Django
+6. Tambahkan beberapa variabel pada main project settings.py aplikasi Django
+7. Membuat sebuah metode view untuk login pada authentication/views.py.
+8. Membuat file urls.py pada folder authentication dan tambahkan URL routing terhadap fungsi yang sudah dibuat dengan endpoint login/.
+9. Menambahkan tambahkan path('auth/', include('authentication.urls')), pada file pbp_project/urls.py.
+
+10. Instal package provider dan pbp_django_auth
+11. Modifikasi root widget untuk menyediakan CookieRequest library ke semua child widgets dengan menggunakan Provider.
+12. Membuat file baru pada folder screens dengan nama login.dart. Isi dengan kode yang sesuai
+13. Pada file main.dart, pada Widget MaterialApp(...), ubah home: MyHomePage() menjadi home: LoginPage()
+
+14. Membuka endpoint JSON yang sudah dibuat sebelumnya. Salin data json pada situs web Quicktype. Ubah setup name menjadi Product, source type menjadi JSON, dan language menjadi Dart terlebih dahulu.
+
+15. Lakukan flutter pub add http pada terminal proyek Flutter untuk menambahkan package http.
+16. Pada file android/app/src/main/AndroidManifest.xml, tambahkan kode yang sesuai untuk memperbolehkan akses Internet pada aplikasi Flutter yang sedang dibuat.
+17. membuat file baru pada folder lib/screens dengan nama list_product.dart.
+18. Pada file list_product.dart, impor library yang dibutuhkan. Isi kode yang sesuai.
+19. Tambahkan halaman list_product.dart ke widgets/left_drawer.dart.
+20. Ubah fungsi tombol Lihat Produk pada halaman utama agar mengarahkan ke halaman ProductPage. Redirect dengan menambahkan else if setelah kode if(...){...} di bagian akhir onTap: () { } yang ada pada file widgets/shop_card.dart. Impor file yang dibutuhkan saat menambahkan ProductPage ke left_drawer.dart dan shop_card.dart.
+
+21. Membuat sebuah fungsi view baru pada main/views.py aplikasi Django. 
+22. Menambahkan path baru pada main/urls.py dengan kode yang sesuai.
+23. Hubungkan halaman shoplist_form.dart dengan CookieRequest dengan menambahkan kode yang sesuai. Ubahlah perintah pada onPressed: () button juga.

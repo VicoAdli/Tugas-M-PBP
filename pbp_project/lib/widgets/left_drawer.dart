@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pbp_project/providers/auth_provider.dart';
 import 'package:pbp_project/screens/menu.dart';
-import 'package:provider/provider.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -18,7 +16,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'Suspiria',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -28,7 +26,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Catat seluruh keperluan belanjamu di sini!",
+                  "Catat seluruh inventarismu di sini!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -52,13 +50,6 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.visibility),
-            title: const Text('Lihat Item'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/lihatItem');
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Tambah Item'),
             // Bagian redirection ke ShopFormPage
@@ -67,14 +58,11 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Daftar Item'),
+            // Bagian redirection ke ItemPage
             onTap: () {
-              // Panggil fungsi logout dari AuthProvider
-              Provider.of<AuthProvider>(context, listen: false).logout();
-
-              // Pindah ke halaman login
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushReplacementNamed(context, '/lihatItem');
             },
           ),
         ],

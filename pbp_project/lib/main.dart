@@ -1,38 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-
-import 'package:pbp_project/providers/auth_provider.dart';
-import 'package:pbp_project/providers/shop_provider.dart';
-import 'package:pbp_project/screens/lihat_item_page.dart';
-import 'package:pbp_project/screens/login_page.dart';
-import 'package:pbp_project/screens/logout_page.dart';
-import 'package:pbp_project/screens/menu.dart';
-import 'package:pbp_project/screens/shoplist_form.dart';
 import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp();
-    if (kDebugMode) {
-      print("Firebase initialized successfully");
-    }
-  } catch (error) {
-    if (kDebugMode) {
-      print("Error initializing Firebase: $error");
-    }
-  }
+import 'package:pbp_project/screens/login.dart';
+import 'package:pbp_project/screens/shoplist_form.dart';
+import 'package:pbp_project/screens/list_product.dart';
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => ShopProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -40,18 +15,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My App',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: MyHomePage(),
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/logout': (context) => const LogoutPage(),
-        '/addItem': (context) => const ShopFormPage(),
-        '/lihatItem': (context) => const LihatItemPage(),
-      },
-    );
+    return Provider(
+        create: (_) {
+          CookieRequest request = CookieRequest();
+          return request;
+        },
+        child: MaterialApp(
+          title: 'My App',
+          theme: ThemeData(
+            primarySwatch: Colors.indigo,
+          ),
+          home: const LoginPage(),
+          routes: {
+            '/addItem': (context) => const ShopFormPage(),
+            '/lihatItem': (context) => const ItemPage(),
+          },
+        ));
   }
 }
